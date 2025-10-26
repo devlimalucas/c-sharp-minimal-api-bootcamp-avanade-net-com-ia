@@ -1,12 +1,10 @@
 using Microsoft.OpenApi.Models;
-using minimal_api.Models;
+using MinimalApi.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adiciona controllers
 builder.Services.AddControllers();
 
-// Configura Swagger clássico
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -15,7 +13,6 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Habilita Swagger no ambiente de desenvolvimento
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -25,7 +22,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Rota raiz de teste
 app.MapGet("/", () => "API .NET 9 funcionando 👌");
 
 app.MapPost("/login", (LoginDTO loginDTO) => {
@@ -34,9 +30,6 @@ app.MapPost("/login", (LoginDTO loginDTO) => {
      else
          return Results.Unauthorized();
 });
-
-// Mapeia controllers
-app.MapControllers();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
