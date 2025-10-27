@@ -12,7 +12,7 @@ namespace minimal_api.Dominio.Servicos
 
         public void Apagar(Veiculo veiculo)
         {
-            _contexto.Veiculos.Update(veiculo);
+            _contexto.Veiculos.Remove(veiculo);
             _contexto.SaveChanges();
         }
 
