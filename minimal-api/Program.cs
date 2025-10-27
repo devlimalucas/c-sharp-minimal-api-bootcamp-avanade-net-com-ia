@@ -11,7 +11,6 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Minha API (.NET 9)", Version = "v1" });
 });
 
-
 builder.Services.AddDbContext<DbContexto>(options => {
     options.UseMySql(
         builder.Configuration.GetConnectionString("mysql"),
