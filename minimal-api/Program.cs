@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using minimal_api.Dominio.Interfaces;
+using minimal_api.Dominio.Servicos;
 using MinimalApi.DTOs;
 using MinimalApi.Infraestrutura.Db;
 
@@ -10,6 +13,8 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Minha API (.NET 9)", Version = "v1" });
 });
+
+builder.Services.AddScoped<IAdministradorServico, AdministradorServico>();
 
 builder.Services.AddDbContext<DbContexto>(options => {
     options.UseMySql(
@@ -30,14 +35,13 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", () => "API .NET 9 funcionando!!");
 
-app.MapPost("/login", (LoginDTO loginDTO) => {
-     if (loginDTO.Email == "adm@teste.com" && loginDTO.Senha == "123456")
+app.MapPost("/login", ([FromBody] LoginDTO loginDTO, IAdministradorServico administradorServico) => {
+     if (administradorServico.Login(loginDTO) != null)
          return Results.Ok("Login com sucesso");
      else
          return Results.Unauthorized();
 });
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
 
 app.Run();

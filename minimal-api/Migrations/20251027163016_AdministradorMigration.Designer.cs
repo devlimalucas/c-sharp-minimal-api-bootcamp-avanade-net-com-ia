@@ -11,7 +11,7 @@ using MinimalApi.Infraestrutura.Db;
 namespace minimal_api.Migrations
 {
     [DbContext(typeof(DbContexto))]
-    [Migration("20251027130143_AdministradorMigration")]
+    [Migration("20251027163016_AdministradorMigration")]
     partial class AdministradorMigration
     {
         /// <inheritdoc />
