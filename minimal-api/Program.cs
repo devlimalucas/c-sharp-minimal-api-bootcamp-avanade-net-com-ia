@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using minimal_api.Dominio.Interfaces;
+using minimal_api.Dominio.ModelViews;
 using minimal_api.Dominio.Servicos;
 using MinimalApi.DTOs;
 using MinimalApi.Infraestrutura.Db;
@@ -33,7 +34,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapGet("/", () => "API .NET 9 funcionando!!");
+app.MapGet("/", () => Results.Json(new Home()));
 
 app.MapPost("/login", ([FromBody] LoginDTO loginDTO, IAdministradorServico administradorServico) => {
      if (administradorServico.Login(loginDTO) != null)
