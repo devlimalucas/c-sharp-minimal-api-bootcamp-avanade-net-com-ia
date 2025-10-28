@@ -15,9 +15,8 @@ using MinimalApi.Infraestrutura.Db;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Configuração de Serviços
+#region Serviços - Swagger
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -26,10 +25,14 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 });
+#endregion
 
+#region Serviços - Injeção de Dependência
 builder.Services.AddScoped<IAdministradorServico, AdministradorServico>();
 builder.Services.AddScoped<IVeiculoServico, VeiculoServico>();
+#endregion
 
+#region Serviços - Banco de Dados
 builder.Services.AddDbContext<DbContexto>(options =>
 {
     options.UseMySql(
@@ -44,7 +47,7 @@ builder.Services.AddDbContext<DbContexto>(options =>
 
 var app = builder.Build();
 
-#region Middleware Swagger
+#region Middleware - Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -59,13 +62,14 @@ app.UseHttpsRedirection();
 
 #endregion
 
-#region Rotas
+#region Mapeamento de Endpoints
 
-#region Rota Inicial
+#region Endpoint - Home
 app.MapGet("/", () => Results.Json(new Home())).WithTags("Home");
 #endregion
 
-#region Rotas de Administradores
+#region Endpoints - Administradores
+
 app.MapPost("/administradores/login", ([FromBody] LoginDTO loginDTO, IAdministradorServico administradorServico) =>
 {
     if (administradorServico.Login(loginDTO) != null)
@@ -133,7 +137,7 @@ app.MapPost("/administradores", ([FromBody] AdministradorDTO administradorDTO, I
 
 #endregion
 
-#region Rotas de Veículos
+#region Endpoints - Veículos
 
 ErrosDeValidacao validaDTO(VeiculoDTO veiculoDTO)
 {
