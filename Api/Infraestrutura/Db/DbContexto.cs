@@ -22,6 +22,13 @@ public class DbContexto : DbContext
                 Email = "administrador@teste.com",
                 Senha = "123456",
                 Perfil = "Adm"
+            },
+            new Administrador
+            {
+                Id = 2,
+                Email = "editor@teste.com",
+                Senha = "123456",
+                Perfil = "Editor"
             }
         );
     }

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace minimal_api.Migrations
 {
     /// <inheritdoc />
@@ -33,10 +35,32 @@ namespace minimal_api.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Veiculos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Marca = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Ano = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Veiculos", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.InsertData(
                 table: "Administradores",
                 columns: new[] { "Id", "Email", "Perfil", "Senha" },
-                values: new object[] { 1, "administrador@teste.com", "Adm", "123456" });
+                values: new object[,]
+                {
+                    { 1, "administrador@teste.com", "Adm", "123456" },
+                    { 2, "editor@teste.com", "Editor", "123456" }
+                });
         }
 
         /// <inheritdoc />
@@ -44,6 +68,9 @@ namespace minimal_api.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Administradores");
+
+            migrationBuilder.DropTable(
+                name: "Veiculos");
         }
     }
 }
