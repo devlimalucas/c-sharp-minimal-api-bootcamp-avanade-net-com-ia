@@ -30,9 +30,3 @@ Ao longo dessa jornada, consegui revisar e praticar os seguintes tópicos fundam
 - Swagger (Swashbuckle)
 - MSTest
 - Git e GitHub
-
-## 💻 Como rodar localmente
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
